@@ -150,10 +150,13 @@ export default function Home() {
         abi,
         provider
       );
+      console.log("Contract address: ", RANDOM_GAME_NFT_CONTRACT_ADDRESS);
       // read the gameStarted boolean from the contract
       const _gameStarted = await randomGameNFTContract.gameStarted();
+      console.log("Game started: ", _gameStarted);
 
       const _gameArray = await subgraphQuery(FETCH_CREATED_GAME());
+      console.log("Game Array from Graph: ", _gameArray);
       const _game = _gameArray.games[0];
       let _logs = [];
       // Initialize the logs array and query the graph for current gameID
@@ -204,6 +207,7 @@ export default function Home() {
       );
       // call the owner function from the contract
       const _owner = await randomGameNFTContract.owner();
+      console.log("Contract owner: ", _owner);
       // We will get the signer now to extract the address of the currently connected MetaMask account
       const signer = await getProviderOrSigner(true);
       // Get the address associated to the signer which is connected to  MetaMask
@@ -230,8 +234,8 @@ export default function Home() {
         disableInjectedProvider: false,
       });
       connectWallet();
-      getOwner();
       checkIfGameStarted();
+      getOwner();
       setInterval(() => {
         checkIfGameStarted();
       }, 2000);
@@ -282,11 +286,17 @@ export default function Home() {
             onChange={(e) => {
               // The user will enter the value in ether, we will need to convert
               // it to WEI using parseEther
-              setEntryFee(
-                e.target.value >= 0
-                  ? utils.parseEther(e.target.value.toString())
-                  : zero
-              );
+              if (e.target?.value) {
+                setEntryFee(
+                  e.target.value >= 0
+                    ? utils.parseEther(e.target.value.toString())
+                    : zero
+                );
+                console.log(
+                  "Entry fee: ",
+                  utils.parseEther(e.target.value.toString())
+                );
+              }
             }}
             placeholder="Entry Fee (ETH)"
           />

@@ -269,5 +269,6 @@ export const abi = [
     type: "receive",
   },
 ];
+
 export const RANDOM_GAME_NFT_CONTRACT_ADDRESS =
-  "0x1F8576D8Fe028F8B7BAa8Fc1E427fA04682b4597";
+  "0x15735192e758DE36c95E03ae609863383516A32d";
